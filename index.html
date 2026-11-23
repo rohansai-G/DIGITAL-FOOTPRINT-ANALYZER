@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Footprint Analyzer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-icon">◈</div><div><strong>Footprint<span>Check</span></strong><small>PUBLIC EXPOSURE ANALYZER</small></div></div>
+    <div class="side-label">WORKSPACE</div>
+    <button class="nav active" data-view="analyze"><span>⌕</span> New analysis</button>
+    <button class="nav" data-view="history"><span>◷</span> Assessment history</button>
+    <button class="nav" data-view="password"><span>♢</span> Password breach check</button>
+    <div class="side-bottom"><div class="status-dot"></div><div><strong>Local analysis server</strong><small>SQLite database enabled</small></div></div>
+  </aside>
+  <main>
+    <header><div><div class="eyebrow">DIGITAL PRIVACY & SECURITY</div><h1>Have you been exposed?</h1><p>Search public results and check whether a password appears in known breach data.</p></div><div class="live-pill"><i></i> PUBLIC WEB SEARCH</div></header>
+    <section id="analyzeView">
+      <div class="search-card">
+        <div class="section-kicker">NEW ASSESSMENT</div><h2>Search your digital footprint</h2><p class="muted">Enter a username, public name, or your own email address. Results come from a live public web search.</p>
+        <form id="searchForm"><label for="term">Search term</label><div class="search-row"><div class="input-wrap"><span>⌕</span><input id="term" name="term" placeholder="e.g. your_username" required maxlength="180"></div><button id="submitBtn" type="submit">Search exposure <span>↗</span></button></div><div class="privacy-note">♢ Only search your own email or information you are authorized to check.</div></form>
+      </div>
+      <div id="message" class="message hidden"></div>
+      <section id="report" class="hidden">
+        <div class="results-heading"><div><div class="section-kicker">ASSESSMENT REPORT</div><h2>Analysis results</h2></div><span id="reportId" class="id-pill"></span></div>
+        <div class="metrics">
+          <div class="metric score-metric"><div class="metric-label">RISK SCORE</div><div class="score-line"><strong id="score">--</strong><span>/ 100</span></div><div class="meter"><div id="meterFill"></div></div><small>Rule-based demonstration score</small></div>
+          <div class="metric"><div class="metric-label">RISK LEVEL</div><div id="level" class="level-badge">--</div><p id="termLabel" class="metric-foot"></p></div>
+          <div class="metric"><div class="metric-label">PUBLIC RESULTS</div><strong id="resultCount" class="big-number">0</strong><p class="metric-foot">Search matches returned</p></div>
+        </div>
+        <div class="report-grid">
+          <div class="panel"><div class="panel-title">Risk indicators <span>↗</span></div><div id="indicators" class="indicator-list"></div></div>
+          <div class="panel"><div class="panel-title">Recommendations <span>✳</span></div><ul id="recommendations" class="recommendations"></ul></div>
+        </div>
+        <div class="panel result-panel"><div class="panel-title">Public search results <span id="resultCountLabel"></span></div><div id="resultsList"></div></div>
+        <p class="disclaimer">This heuristic score does not prove identity, personal-data exposure, or a confirmed breach. Review every result manually.</p>
+      </section>
+    </section>
+    <section id="passwordView" class="hidden">
+      <div class="search-card">
+        <div class="section-kicker">PASSWORD SECURITY</div><h2>Check a password against known breaches</h2>
+        <p class="muted">Uses the Have I Been Pwned Pwned Passwords service. The password is hashed locally; only the first five characters of its SHA-1 hash are sent to the service. The password is not saved in the database.</p>
+        <form id="passwordForm"><label for="passwordInput">Password to check</label><div class="search-row"><div class="input-wrap"><span>⌁</span><input id="passwordInput" name="password" type="password" placeholder="Enter a password to check" required maxlength="4096" autocomplete="off"></div><button id="passwordBtn" type="submit">Check password <span>↗</span></button></div><div class="privacy-note">For privacy, use a password you own. Do not enter a password you currently use for important accounts; use a test password for a demo.</div></form>
+      </div>
+      <div id="passwordMessage" class="message hidden"></div>
+      <div id="passwordResult" class="hidden">
+        <div class="metrics password-metrics">
+          <div class="metric score-metric"><div class="metric-label">PASSWORD RISK SCORE</div><div class="score-line"><strong id="passwordRiskScore">--</strong><span>/ 100</span></div><div class="meter"><div id="passwordRiskMeter"></div></div><small>Higher means greater risk</small></div>
+          <div class="metric"><div class="metric-label">STRENGTH</div><div id="passwordStrength" class="level-badge">--</div><p id="passwordStrengthText" class="metric-foot"></p></div>
+          <div class="metric"><div class="metric-label">BREACH STATUS</div><div id="passwordStatus" class="level-badge">--</div><p id="passwordCount" class="metric-foot"></p></div>
+        </div>
+        <div class="report-grid">
+          <div class="panel"><div class="panel-title">Complexity analysis</div><div id="passwordComplexity" class="indicator-list"></div></div>
+          <div class="panel"><div class="panel-title">Recommendations</div><ul id="passwordRecommendations" class="recommendations"></ul></div>
+        </div>
+        <div class="panel"><div class="panel-title">Breach check details</div><h2 id="passwordHeading"></h2><p id="passwordDescription" class="muted"></p><p id="passwordPrivacy" class="privacy-note"></p></div>
+      </div>
+    </section>
+    <section id="historyView" class="hidden">
+      <div class="search-card"><div class="section-kicker">SAVED RECORDS</div><h2>Assessment history</h2><p class="muted">Previous assessments saved to your local SQLite database.</p><button id="refreshHistory" class="secondary-button">Refresh history ↻</button></div>
+      <div class="panel history-panel"><div id="historyTable"></div></div>
+    </section>
+    <footer><span>FOOTPRINTCHECK · COLLEGE PROJECT</span><span>C++ BACKEND · SQLITE DATABASE</span></footer>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

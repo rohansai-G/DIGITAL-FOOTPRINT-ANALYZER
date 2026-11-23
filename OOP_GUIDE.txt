@@ -1,0 +1,30 @@
+C++ OOP GUIDE — DIGITAL FOOTPRINT ANALYZER
+
+Open server.cpp in VS Code and use Ctrl+F to find each class.
+
+1. ABSTRACTION — RiskAnalyzer
+class RiskAnalyzer declares analyze() as a pure virtual function (= 0). It defines what every risk analyzer must provide, without providing the implementation itself.
+
+2. INHERITANCE — FootprintRiskAnalyzer
+class FootprintRiskAnalyzer : public RiskAnalyzer
+The footprint analyzer inherits the RiskAnalyzer interface.
+
+3. POLYMORPHISM — virtual analyze() and override
+FootprintRiskAnalyzer overrides analyze(). The method is called through the concrete analyzer object in main(). The virtual interface also allows a RiskAnalyzer pointer/reference to call the derived implementation.
+
+4. ENCAPSULATION — AssessmentRepository
+AssessmentRepository stores its SQLite database pointer in a private member. Its public initialize(), save(), and getHistory() methods provide controlled access to database operations.
+
+5. SEPARATE RESPONSIBILITY — PasswordRiskChecker
+PasswordRiskChecker groups the password-breach request in check(). The password is hashed locally and only the first five hash characters are sent to the Pwned Passwords range service.
+
+6. DATA STRUCTURES — Result and Report
+Result represents one public search result. Report holds the search term, risk score, level, results, and risk indicators.
+
+7. OBJECTS AND API ROUTES — main()
+main() creates AssessmentRepository repository(db), FootprintRiskAnalyzer footprintAnalyzer, and PasswordRiskChecker passwordChecker. The /api/analyze route uses the analyzer and repository; /api/password-check uses the password checker; /api/history uses the repository.
+
+EXPLANATION FOR THE TEACHER
+"The project uses an abstract RiskAnalyzer base class and a derived FootprintRiskAnalyzer class. The derived class overrides the virtual analyze() method, showing inheritance and polymorphism. AssessmentRepository encapsulates SQLite operations, while PasswordRiskChecker checks password exposure using the Pwned Passwords range service. Result and Report store the data used by the application."
+
+Note: This is a student demonstration application. Its public-footprint score is heuristic and search results can be limited by DuckDuckGo.
